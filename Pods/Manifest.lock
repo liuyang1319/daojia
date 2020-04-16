@@ -1,0 +1,139 @@
+PODS:
+  - Alamofire (4.8.2)
+  - AlipaySDK-iOS (15.5.9)
+  - AliyunOSSiOS (2.10.7)
+  - AMap3DMap (6.9.0):
+    - AMapFoundation (~> 1.5)
+  - AMapFoundation (1.5.7)
+  - AMapLocation (2.6.2):
+    - AMapFoundation (~> 1.4)
+  - AMapSearch (6.9.0):
+    - AMapFoundation (~> 1.4)
+  - DNSPageView (1.0.4)
+  - ESTabBarController-swift (2.6.5)
+  - FSPagerView (0.8.3)
+  - HandyJSON (5.0.0)
+  - IQKeyboardManagerSwift (6.4.1)
+  - JXMarqueeView (0.0.8)
+  - Kingfisher (4.10.1)
+  - LTScrollView (0.2.1)
+  - Masonry (1.1.0)
+  - MBProgressHUD (1.1.0)
+  - MJRefresh (3.2.0)
+  - Moya (13.0.1):
+    - Moya/Core (= 13.0.1)
+  - Moya/Core (13.0.1):
+    - Alamofire (~> 4.1)
+    - Result (~> 4.1)
+  - Result (4.1.0)
+  - Schedule (2.0.3)
+  - SnapKit (4.2.0)
+  - SVProgressHUD (2.2.5)
+  - SwiftMessages (7.0.0):
+    - SwiftMessages/App (= 7.0.0)
+  - SwiftMessages/App (7.0.0)
+  - SwiftyJSON (5.0.0)
+  - Toast-Swift (5.0.1)
+  - TZImagePickerController (3.2.2)
+  - UMCCommon (2.1.1)
+  - UMCPush (3.2.4):
+    - UMCCommon
+  - WechatOpenSDK (1.8.4)
+
+DEPENDENCIES:
+  - AlipaySDK-iOS
+  - AliyunOSSiOS (~> 2.10.7)
+  - AMap3DMap (~> 6.9.0)
+  - AMapLocation (~> 2.6.2)
+  - AMapSearch (~> 6.9.0)
+  - DNSPageView (~> 1.0.1)
+  - ESTabBarController-swift (~> 2.6.2)
+  - FSPagerView (~> 0.8.2)
+  - HandyJSON (~> 5.0.0-beta.1)
+  - IQKeyboardManagerSwift
+  - JXMarqueeView (~> 0.0.8)
+  - Kingfisher (~> 4.10.1)
+  - LTScrollView (~> 0.2.1)
+  - Masonry
+  - MBProgressHUD (~> 1.1.0)
+  - MJRefresh (~> 3.2.0)
+  - Moya (~> 13.0.1)
+  - Schedule (~> 2.0)
+  - SnapKit (~> 4.2.0)
+  - SVProgressHUD (~> 2.2.5)
+  - SwiftMessages (~> 7.0.0)
+  - SwiftyJSON (~> 5.0.0)
+  - Toast-Swift (~> 5.0.1)
+  - TZImagePickerController
+  - UMCPush
+  - WechatOpenSDK
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - AlipaySDK-iOS
+    - AliyunOSSiOS
+    - AMap3DMap
+    - AMapFoundation
+    - AMapLocation
+    - AMapSearch
+    - DNSPageView
+    - ESTabBarController-swift
+    - FSPagerView
+    - HandyJSON
+    - IQKeyboardManagerSwift
+    - JXMarqueeView
+    - Kingfisher
+    - LTScrollView
+    - MBProgressHUD
+    - MJRefresh
+    - Moya
+    - Result
+    - Schedule
+    - SnapKit
+    - SVProgressHUD
+    - SwiftMessages
+    - SwiftyJSON
+    - TZImagePickerController
+    - UMCCommon
+    - UMCPush
+    - WechatOpenSDK
+  trunk:
+    - Masonry
+    - Toast-Swift
+
+SPEC CHECKSUMS:
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  AlipaySDK-iOS: 1c5283b30977a24acecc0114662697f7dc78f618
+  AliyunOSSiOS: 602b6a4e70e62a5f0a6431c20496343141d7e66f
+  AMap3DMap: c80b264f08f179d9b0949b84c65fc1a51dec9d6f
+  AMapFoundation: 216d58448c80356434ac4332250a8fdb2f5c4d1e
+  AMapLocation: 89a7e4eb6040d32ba73c77a4966ecc66e46aa7c3
+  AMapSearch: af02822537e55b85a4752e9df5c19e4b9da82031
+  DNSPageView: 28b2b5a9fb65cdc222d45dc2ce6247cd3f9365b5
+  ESTabBarController-swift: f31cd3e30bde23619d3b300266f27864d96ffb58
+  FSPagerView: 670405b2f18e2a87fa37f20b00de783e562c25a8
+  HandyJSON: 992f2d661716d6a91de82d0056927bc7813b5770
+  IQKeyboardManagerSwift: d2df660d0b8d64a15cb2537c9ff303213fa515b2
+  JXMarqueeView: dfb4eadb1bf7245c9b41706e907c889fbf53c2dc
+  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
+  LTScrollView: 93fff4aed9f9545f541a99b320b27808f5307c12
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  MJRefresh: ed450d6eb9d3346a2cb033ab7eb6de090aeef437
+  Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
+  Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
+  Schedule: 1d9d3fa36b3522cd2c9ebcf9bbe4c9ef3e58e24a
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  SwiftMessages: a952f7a9103d9aeab93730a2861d2d8fcdd8758f
+  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
+  Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
+  TZImagePickerController: 44aa49cf35b1e88fe292be955e15b9003a5b1d83
+  UMCCommon: 971f324a5a99c9d662ae040a815e7e3d7ef8b2a8
+  UMCPush: 1edd856027dcf905333effb4040ace5d236a7316
+  WechatOpenSDK: 9b721089507c895d05f997408c30bb6e6f5f9b60
+
+PODFILE CHECKSUM: f97f643be6129af84d37dcd9da1695e8440b6cf2
+
+COCOAPODS: 1.9.1
