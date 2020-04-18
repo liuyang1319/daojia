@@ -14,7 +14,7 @@ import Alamofire
 import MJRefresh
 //位置
 import CoreLocation
-class YDHomeViewController: UIViewController ,AMapLocationManagerDelegate,YDLocationAddersViewControllerDelegate{
+class YDHomeViewController: YDBasicViewController ,AMapLocationManagerDelegate,YDLocationAddersViewControllerDelegate{
     var recommendModel = [YDHomeAllGoodListModel]()
     var recommend8Model = [YDHomeAllGoodListModel]()
     let locationManager = AMapLocationManager()
@@ -407,8 +407,9 @@ class YDHomeViewController: UIViewController ,AMapLocationManagerDelegate,YDLoca
 
     //    购物车数量
     func requestSearchGoodsDate(){
-        let uuid = UIDevice.current.identifierForVendor?.uuidString
-        shopCartViewModel.refreshClassfiyDataSource(deviceNumber: uuid!, memberId:UserDefaults.LoginInfo.string(forKey: .id) ?? "")
+        shopCartViewModel.refreshGoodsCart()
+//        let uuid = UIDevice.current.identifierForVendor?.uuidString
+//        shopCartViewModel.refreshClassfiyDataSource(deviceNumber: uuid!, memberId:UserDefaults.LoginInfo.string(forKey: .id) ?? "")
     }
     
     
@@ -710,7 +711,8 @@ extension YDHomeViewController: UICollectionViewDelegateFlowLayout, UICollection
 
 }
 // MARK: -为你推荐单个商品进详情
-extension YDHomeViewController:YDHomeRecommendReusableViewDelegate{
+// MARK: - 单个商品进详情
+extension YDHomeViewController:YDHomeRecommendReusableViewDelegate, YDYouLikeCollectionViewCellDelegate{
     func addSelectYouLikeIndexReusableView(selectButton: UIButton, goodListModel: YDHomeYouLikeListModel, cell: YDHomeRecommendReusableView, cellExcellent: YDHomeRecommendCollectionViewCell, iconImage: UIImageView) {
         
         var rect : CGRect = cell.frame
@@ -724,54 +726,103 @@ extension YDHomeViewController:YDHomeRecommendReusableViewDelegate{
             rect.origin.y = rect.origin.y+CGFloat((selectButton.tag*135))
         }
         rect.origin.y = rect.origin.y-60
-        var imageViewRect : CGRect = iconImage.frame
-        imageViewRect.origin.y = rect.origin.y + imageViewRect.origin.y
-        imageViewRect.origin.x = rect.origin.x + imageViewRect.origin.x
-        print("===================%@",selectButton.tag%2)
-        print("++++++++++++++++%@",collectionView.contentOffset.y)
-        print("---------------%@",imageViewRect.origin.y)
-        ShoppingCarTool().startAnimation(view: iconImage, andRect: imageViewRect, andFinishedRect: CGPoint(x:(LBFMScreenWidth/4 * 3)-20,  y:LBFMScreenHeight-LBFMTabBarHeight), andFinishBlock: { (finished : Bool) in
-        })
         
-        //        let goodsModel = self.likeGoodsModel[selectBtn.tag]
-        let uuid = UIDevice.current.identifierForVendor?.uuidString
-        let userDeviceNumber = uuid ?? ""
-        let userMemberId = UserDefaults.LoginInfo.string(forKey:.id) ?? ""
+        animationToAddCart(iconImage: iconImage, rect: rect)
+//        var imageViewRect : CGRect = iconImage.frame
+//        imageViewRect.origin.y = rect.origin.y + imageViewRect.origin.y
+//        imageViewRect.origin.x = rect.origin.x + imageViewRect.origin.x
+//        print("===================%@",selectButton.tag%2)
+//        print("++++++++++++++++%@",collectionView.contentOffset.y)
+//        print("---------------%@",imageViewRect.origin.y)
+//        ShoppingCarTool().startAnimation(view: iconImage, andRect: imageViewRect, andFinishedRect: CGPoint(x:(LBFMScreenWidth/4 * 3)-20,  y:LBFMScreenHeight-LBFMTabBarHeight), andFinishBlock: { (finished : Bool) in
+//        })
         
-        YDClassifyViewProvider.request(.getClassifyPlusGoodsList(supplierId:UserDefaults.warehouseManagement.string(forKey:.supplierId) ?? "", goodsCode: goodListModel.goodsCode ?? "", count:1,deviceNumber: userDeviceNumber,memberId:userMemberId,status:1)) { result in
-            if case let .success(response) = result {
-                //解析数据
-                let data = try? response.mapJSON()
-                let json = JSON(data!)
-                print("---------------%@",json)
-                if json["success"] == true{
-                    self.cartCount = Int(UserDefaults.cartCountInfo.string(forKey:.countCart) ?? "0")!
-                    self.cartCount += 1
-                    UserDefaults.cartCountInfo.set(value: String(self.cartCount), forKey: .countCart)
-                    //                    显示购物车数量
-                    NotificationCenter.default.post(name: NSNotification.Name(YDCartSumNumber), object: self, userInfo: ["namber":self.cartCount])
-                    NotificationCenter.default.post(name: NSNotification.Name("requestCartGoodsShowHintData"), object: self, userInfo: nil)
-                }
-            }
-        }
+        requestToAddCart(goodsListModel: goodListModel)
+//        //        let goodsModel = self.likeGoodsModel[selectBtn.tag]
+//        let uuid = UIDevice.current.identifierForVendor?.uuidString
+//        let userDeviceNumber = uuid ?? ""
+//        let userMemberId = UserDefaults.LoginInfo.string(forKey:.id) ?? ""
+//
+//        YDClassifyViewProvider.request(.getClassifyPlusGoodsList(supplierId:UserDefaults.warehouseManagement.string(forKey:.supplierId) ?? "", goodsCode: goodListModel.goodsCode ?? "", count:1,deviceNumber: userDeviceNumber,memberId:userMemberId,status:1)) { result in
+//            if case let .success(response) = result {
+//                //解析数据
+//                let data = try? response.mapJSON()
+//                let json = JSON(data!)
+//                print("---------------%@",json)
+//                if json["success"] == true{
+//                    self.cartCount = Int(UserDefaults.cartCountInfo.string(forKey:.countCart) ?? "0")!
+//                    self.cartCount += 1
+//                    UserDefaults.cartCountInfo.set(value: String(self.cartCount), forKey: .countCart)
+//                    //                    显示购物车数量
+//                    NotificationCenter.default.post(name: NSNotification.Name(YDCartSumNumber), object: self, userInfo: ["namber":self.cartCount])
+//                    NotificationCenter.default.post(name: NSNotification.Name("requestCartGoodsShowHintData"), object: self, userInfo: nil)
+//                }
+//            }
+//        }
     }
     
-    func addSelectYouLikeIndexTableViewCell(selectIndex: String, goodsCode: String) {
-        let goodsVC = YDShoppingViewController()
-        goodsVC.goodsId = selectIndex
-        goodsVC.goodsCode = goodsCode
-        self.navigationController?.pushViewController(goodsVC, animated: true)
-    }
-}
-// MARK: - 单个商品进详情
-extension YDHomeViewController:YDYouLikeCollectionViewCellDelegate{
-
+    
     func addSelectGoodsCartCollectionViewCell(selectButton: UIButton,goodListModel:YDHomeAllGoodListModel, cell: YDYouLikeCollectionViewCell, cellExcellent: YDExcellentViewCell, iconImage: UIImageView) {
         var rect : CGRect = cell.frame
         var rectExcellent : CGRect = cellExcellent.frame
         rect.origin.x = rectExcellent.origin.x
         //获取当前cell的相对坐标
         rect.origin.y = (rect.origin.y - collectionView.contentOffset.y)
+        
+        animationToAddCart(iconImage: iconImage, rect: rect)
+//        var imageViewRect : CGRect = iconImage.frame
+//        imageViewRect.origin.y = rect.origin.y + imageViewRect.origin.y
+//        imageViewRect.origin.x = rect.origin.x + imageViewRect.origin.x
+//        print("===================%@",rect.origin.y)
+//        print("++++++++++++++++%@",collectionView.contentOffset.y)
+//        print("---------------%@",imageViewRect.origin.y)
+//        ShoppingCarTool().startAnimation(view: iconImage, andRect: imageViewRect, andFinishedRect: CGPoint(x:(LBFMScreenWidth/4 * 3)-20,  y:LBFMScreenHeight-LBFMTabBarHeight), andFinishBlock: { (finished : Bool) in
+//        })
+        
+        requestToAddCart(goodsListModel: goodListModel)
+//        //        let goodsModel = youLikeGoodsModel?[selectButton.tag]
+//        let uuid = UIDevice.current.identifierForVendor?.uuidString
+//        let userDeviceNumber = uuid ?? ""
+//        let userMemberId = UserDefaults.LoginInfo.string(forKey:.id) ?? ""
+//        YDClassifyViewProvider.request(.getClassifyPlusGoodsList(supplierId:UserDefaults.warehouseManagement.string(forKey:.supplierId) ?? "", goodsCode: goodListModel.goodsCode ?? "", count:1,deviceNumber: userDeviceNumber,memberId:userMemberId,status:1)) { result in
+//            if case let .success(response) = result {
+//                //解析数据
+//                let data = try? response.mapJSON()
+//                let json = JSON(data!)
+//                print("---------------%@",json)
+//                if json["success"] == true{
+//                    self.cartCount = Int(UserDefaults.cartCountInfo.string(forKey:.countCart) ?? "0")!
+//                    self.cartCount += 1
+//
+//                    UserDefaults.cartCountInfo.set(value: String(self.cartCount), forKey: .countCart)
+//                    NotificationCenter.default.post(name: NSNotification.Name(YDCartSumNumber), object: self, userInfo: ["namber":self.cartCount])
+//                    NotificationCenter.default.post(name: NSNotification.Name("requestCartGoodsData"), object: self, userInfo: nil)
+//                } else {
+//                    self.toast(errorJson: json)
+//                    self.collectionView.reloadData()
+//                }
+//            }
+//        }
+    }
+    
+    func addSelectYouLikeIndexTableViewCell(selectIndex: String, goodsCode: String) {
+        addSelectGoods(selectIndex: selectIndex, goodsCode: goodsCode)
+    }
+    
+    func addSelectGoodsIndexTableViewCell(selectIndex: String,goodsCode:String) {
+        addSelectGoods(selectIndex: selectIndex, goodsCode: goodsCode)
+    }
+    
+    private func addSelectGoods(selectIndex: String, goodsCode: String) {
+        let goodsVC = YDShoppingViewController()
+        goodsVC.goodsId = selectIndex
+        goodsVC.goodsCode = goodsCode
+        self.navigationController?.pushViewController(goodsVC, animated: true)
+    }
+    
+    
+    // 添加购物车动画
+    private func animationToAddCart(iconImage: UIImageView, rect: CGRect) {
         var imageViewRect : CGRect = iconImage.frame
         imageViewRect.origin.y = rect.origin.y + imageViewRect.origin.y
         imageViewRect.origin.x = rect.origin.x + imageViewRect.origin.x
@@ -780,13 +831,27 @@ extension YDHomeViewController:YDYouLikeCollectionViewCellDelegate{
         print("---------------%@",imageViewRect.origin.y)
         ShoppingCarTool().startAnimation(view: iconImage, andRect: imageViewRect, andFinishedRect: CGPoint(x:(LBFMScreenWidth/4 * 3)-20,  y:LBFMScreenHeight-LBFMTabBarHeight), andFinishBlock: { (finished : Bool) in
         })
-
+    }
+    
+    // 添加购物车请求
+    private func requestToAddCart(goodsListModel: HandyJSON) {
+        var code = ""
+        if goodsListModel is YDHomeAllGoodListModel {
+            code = (goodsListModel as! YDHomeAllGoodListModel).goodsCode ?? ""
+        } else if goodsListModel is YDHomeYouLikeListModel {
+            code = (goodsListModel as! YDHomeYouLikeListModel).goodsCode ?? ""
+        }
         
-//        let goodsModel = youLikeGoodsModel?[selectButton.tag]
+        if code.isEmpty {
+            self.toast(error: "添加失败，请重新添加")
+            self.collectionView.reloadData()
+            return
+        }
+        
         let uuid = UIDevice.current.identifierForVendor?.uuidString
         let userDeviceNumber = uuid ?? ""
         let userMemberId = UserDefaults.LoginInfo.string(forKey:.id) ?? ""
-        YDClassifyViewProvider.request(.getClassifyPlusGoodsList(supplierId:UserDefaults.warehouseManagement.string(forKey:.supplierId) ?? "", goodsCode: goodListModel.goodsCode ?? "", count:1,deviceNumber: userDeviceNumber,memberId:userMemberId,status:1)) { result in
+    YDClassifyViewProvider.request(.getClassifyPlusGoodsList(supplierId:UserDefaults.warehouseManagement.string(forKey:.supplierId) ?? "", goodsCode: code, count:1,deviceNumber: userDeviceNumber,memberId:userMemberId,status:1)) { result in
             if case let .success(response) = result {
                 //解析数据
                 let data = try? response.mapJSON()
@@ -799,19 +864,15 @@ extension YDHomeViewController:YDYouLikeCollectionViewCellDelegate{
                     UserDefaults.cartCountInfo.set(value: String(self.cartCount), forKey: .countCart)
                     NotificationCenter.default.post(name: NSNotification.Name(YDCartSumNumber), object: self, userInfo: ["namber":self.cartCount])
                     NotificationCenter.default.post(name: NSNotification.Name("requestCartGoodsData"), object: self, userInfo: nil)
+                } else {
+                    self.toast(errorJson: json)
+                    self.collectionView.reloadData()
                 }
             }
         }
     }
-    
-    func addSelectGoodsIndexTableViewCell(selectIndex: String,goodsCode:String) {
-        let goodsVC = YDShoppingViewController()
-        goodsVC.goodsId = selectIndex
-        goodsVC.goodsCode = goodsCode
-        self.navigationController?.pushViewController(goodsVC, animated: true)
-    }
-    
 }
+
 // MARK: -   百宝箱
 extension YDHomeViewController:YDHomeHeaderCellCollectionViewCellDelegate {
 

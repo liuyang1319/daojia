@@ -291,7 +291,7 @@ class YDApplyRefundViewController: YDBasicViewController {
                         }
                         
                     }else{
-                        self.toast(error: json["error"]["errorMessage"].description)
+                        self.toast(errorJson: json)
                     }
                 }
         }
@@ -371,7 +371,7 @@ class YDApplyRefundViewController: YDBasicViewController {
                         self.payWeChat()
                     }
                 }else{
-                    self.toast(error: json["error"]["errorMessage"].description)
+                    self.toast(errorJson: json)
                 }
             }
         }

@@ -16,8 +16,6 @@ class YDHomeSearchGoodsViewController: YDBasicViewController,UITextFieldDelegate
     var tableView: UITableView!
     var searchName = String()
     var addGoodArray = Array<Any>()
-    var userDeviceNumber = String()
-    var userMemberId = String()
     let YDHomeSearchTableViewCellID = "YDHomeSearchTableViewCell"
     let YDHomeSearchBarFooterViewID = "YDHomeSearchBarFooterView"
     private lazy var rView : UIView = {
@@ -498,14 +496,9 @@ extension  YDHomeSearchGoodsViewController:YDHomeSearchTableViewCellDelegate{
         })
         //添加到已购买数组之中
         self.addGoodArray.append(searchGoodsViewModel.searchGoodsListModel![button.tag])
-        var goodsModel = searchGoodsViewModel.searchGoodsListModel![button.tag]
-
-
-        let uuid = UIDevice.current.identifierForVendor?.uuidString
-        userDeviceNumber = uuid ?? ""
-        userMemberId = UserDefaults.LoginInfo.string(forKey:.id) ?? ""
-        YDShopCartViewModel.share().refreshClassfiyDataSource(deviceNumber: uuid ?? "", memberId: userMemberId)
-    YDClassifyViewProvider.request(.getClassifyPlusGoodsList(supplierId:UserDefaults.warehouseManagement.string(forKey:.supplierId) ?? "", goodsCode: goodsModel.code ?? "", count:1,deviceNumber: userDeviceNumber,memberId: userMemberId,status:1)) { result in
+        let goodsModel = searchGoodsViewModel.searchGoodsListModel![button.tag]
+//        YDShopCartViewModel.share().refreshClassfiyDataSource(deviceNumber: uuid ?? "", memberId: userMemberId)
+    YDClassifyViewProvider.request(.getClassifyPlusGoodsList(supplierId:UserDefaults.warehouseManagement.string(forKey:.supplierId) ?? "", goodsCode: goodsModel.code ?? "", count:1,deviceNumber: YDInfoTool.getUUid(),memberId: YDInfoTool.getMemberId(),status:1)) { result in
             if case let .success(response) = result {
                 //解析数据
                 let data = try? response.mapJSON()
@@ -520,6 +513,8 @@ extension  YDHomeSearchGoodsViewController:YDHomeSearchTableViewCellDelegate{
                     UserDefaults.cartCountInfo.set(value: String(self.cartCount), forKey: .countCart)
                     NotificationCenter.default.post(name: NSNotification.Name(YDCartSumNumber), object: self, userInfo: ["namber":self.cartCount])
                     NotificationCenter.default.post(name: NSNotification.Name("requestCartGoodsData"), object: self, userInfo: nil)
+                    YDShopCartViewModel.share().refreshGoodsCart()
+//                    NotificationCenter.default.post(name: NSNotification.Name.init(kShopCartAddGoods), object: goodsModel)
                 }
             }
             }

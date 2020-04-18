@@ -298,7 +298,7 @@ class YDAddEditAddersViewController: YDBasicViewController,YDSearchAddersViewCon
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "新建收获地址"
+        self.title = "新建收货地址"
         
         self.type = ""
         self.isDefault = "0"
@@ -475,7 +475,7 @@ class YDAddEditAddersViewController: YDBasicViewController,YDSearchAddersViewCon
             if isLetterWithChinese(string) == true || string == ""{
                 let text = self.nameField.text!
                 let len = text.count + string.count - range.length
-                return len<=20
+                return len<=6
             }else{
                 return false
             }

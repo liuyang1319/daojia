@@ -8,6 +8,7 @@
 
 import Foundation
 
-let kCancelOrder = "cancelOrder"
-let kRefundSuccess = "refundSuccess"
-let kShopCartDataRefresh = "shopCartDataRefresh"
+let kCancelOrder = "cancelOrder"    // 取消订单
+let kRefundSuccess = "refundSuccess"    // 退款成功
+let kShopCartDataRefresh = "shopCartDataRefresh"    // 刷新购物车
+let kShopCartAddGoods = "shopCartAddGoods"  // 往购物车添加商品

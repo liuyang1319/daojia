@@ -15,6 +15,9 @@ protocol YDShopCartViewCellDelegate:NSObjectProtocol {
     func paySelectIndexGoodsListCollectionViewCell(goodsCount:YDShopCartViewCell,goodsIdArray:Array<String>,goodsCountArray:Array<String>,priceSum:CGFloat)
 //    查看商品详情
     func selectLoockGoodsInfo(selectSecton:Int,selectRow:Int)
+    
+    // 删除单个商品
+    func deleteGoodsInfo(selectSection: Int, selectRow: Int)
 }
 class YDShopCartViewCell: UICollectionViewCell {
     weak var delegate : YDShopCartViewCellDelegate?
@@ -68,7 +71,7 @@ class YDShopCartViewCell: UICollectionViewCell {
 //            defaults.set(self.selectArray, forKey: "ShopCartGoodsList")
             self.tableView.frame = CGRect(x: 0, y: 0, width:LBFMScreenWidth, height:(CGFloat(self.selectArray.count) * 130) + 120);
 
-            self.tableView.reloadData()
+            reCalculateGoodCount()
         }
     }
     var setFooterH:Int = 0{
@@ -127,7 +130,7 @@ class YDShopCartViewCell: UICollectionViewCell {
             }
         }
         reCalculateGoodCount()
-        self.tableView.reloadData()
+        
     }
     
 }
@@ -200,6 +203,7 @@ extension YDShopCartViewCell {
         NotificationCenter.default.post(name: NSNotification.Name.init("refreshGoodsCountLisetCart"), object:sumNumber)
         NotificationCenter.default.post(name: NSNotification.Name.init("refreshGoodsIdArrayCart"), object:IdArray)
         IdArray.removeAll()
+        self.tableView.reloadData()
     }
 
 }
@@ -257,6 +261,22 @@ extension YDShopCartViewCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return CGFloat(FooterH)
     }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "删除"
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        delegate?.deleteGoodsInfo(selectSection: indexPath.section, selectRow: indexPath.row)
+    }
 
 }
 
@@ -289,8 +309,6 @@ extension YDShopCartViewCell: YDShopCollectionViewCellDelegate,YDShopFooterReusa
                     }
                 }
             self.reCalculateGoodCount()
-            self.tableView.reloadData()
-
     }
 //    数量加
     func selectGoodsListPlusCollectionViewCell(goodsCount: YDShopCollectionViewCell, countBtn: UIButton,minusBtn:UIButton, label: UILabel) {
@@ -320,7 +338,6 @@ extension YDShopCartViewCell: YDShopCollectionViewCellDelegate,YDShopFooterReusa
                      NotificationCenter.default.post(name: NSNotification.Name(YDCartSumNumber), object: self, userInfo: ["namber":self.cartCount])
                 }
                 self.reCalculateGoodCount()
-                self.tableView.reloadData()
             }
         }
     }
@@ -351,8 +368,6 @@ extension YDShopCartViewCell: YDShopCollectionViewCellDelegate,YDShopFooterReusa
              NotificationCenter.default.post(name: NSNotification.Name.init("refreshGoodsISAllSelect"), object:nil)
         }
         reCalculateGoodCount()
-        self.tableView.reloadData()
-
     }
 
 //    减
@@ -386,7 +401,6 @@ extension YDShopCartViewCell: YDShopCollectionViewCellDelegate,YDShopFooterReusa
                     NotificationCenter.default.post(name: NSNotification.Name(YDCartSumNumber), object: self, userInfo: ["namber":self.cartCount])
                 }
                 self.reCalculateGoodCount()
-                self.tableView.reloadData()
             }
         }
     }

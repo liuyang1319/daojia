@@ -148,10 +148,15 @@ class YDShopCartViewController: YDBasicViewController {
         }
 //        self.selectBtn.setImage(UIImage(named: "noSelectCartImage"), for: UIControl.State.normal)
          FooterH = 70
+        
+        
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addNotification()
         currentNetReachability()
         navBarTitleColor = UIColor.white
         navBarBarTintColor = YDLabelColor
@@ -165,29 +170,6 @@ class YDShopCartViewController: YDBasicViewController {
         
         self.collectionView.frame = CGRect(x:0, y: 0, width:LBFMScreenWidth, height: LBFMScreenHeight);
         self.view.addSubview(self.collectionView)
-//        单选删除数量
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshGoodsCountLisetCart(nofit:)), name: NSNotification.Name(rawValue:"refreshGoodsCountLisetCart"), object: nil)
-        
-//        删除未全选
-//         NotificationCenter.default.addObserver(self, selector: #selector(refreshGoodsCountLisetAllSelect(nofit:)), name: NSNotification.Name(rawValue:"refreshGoodsCountLisetAllSelect"), object: nil)
-//        删除全选
-         NotificationCenter.default.addObserver(self, selector: #selector(refreshGoodsISAllSelect(nofit:)), name: NSNotification.Name(rawValue:"refreshGoodsISAllSelect"), object: nil)
-//        单选商品ID
-         NotificationCenter.default.addObserver(self, selector: #selector(refreshGoodsIdArrayCart(nofit:)), name: NSNotification.Name(rawValue:"refreshGoodsIdArrayCart"), object: nil)
-//          猜你喜欢，添加购物车刷新数据
-        NotificationCenter.default.addObserver(self, selector: #selector(requestCartGoodsShowHintData(nofit:)), name: NSNotification.Name(rawValue:"requestCartGoodsShowHintData"), object: nil)
-//      添加商品购物车刷新
-        NotificationCenter.default.addObserver(self, selector: #selector(requestCartGoodsData(nofit:)), name: NSNotification.Name(rawValue:"requestCartGoodsData"), object: nil)
-        
-//      选择地址刷新
-        NotificationCenter.default.addObserver(self, selector: #selector(notificationUpudeatAddersValue(nofit:)), name: NSNotification.Name(rawValue:updeatAdders), object: nil)
-
-//      订单支付完成查看订单返回
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshDetailsOrderGoodsCart(nofit:)), name: NSNotification.Name(rawValue:"refreshDetailsOrderGoodsCart"), object: nil)
-          NotificationCenter.default.post(name: NSNotification.Name.init(""), object:nil)
-        
-        // 刷新购物车
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshShopCart), name: NSNotification.Name.init(kShopCartDataRefresh), object: nil)
         
 //        self.backView.addSubview(self.selectBtn)
 //        self.selectBtn.frame = CGRect(x: 10, y:10, width: 30, height: 30)
@@ -211,6 +193,7 @@ class YDShopCartViewController: YDBasicViewController {
         self.view.addSubview(self.goHome)
         self.goHome.frame = CGRect(x: (LBFMScreenWidth-240)*0.5, y:self.titleName.frame.maxY+30, width: 240, height: 40)
     }
+    
 //    下啦刷新
     @objc func headerRefresh(){
         self.view.hideAllToasts(includeActivity: true, clearQueue: true)
@@ -266,10 +249,15 @@ class YDShopCartViewController: YDBasicViewController {
         self.collectionView.reloadData()
         self.collectionView.isHidden = false
     }
+    
+//    // 第一次请求购物车 默认全选
+//    private func getCartGoods() {
+//        shopCartViewModel.refreshGoodsCartAllSelect()
+//    }
+    
 //    购物车数据
     func requestSearchGoodsDate(){
-        let uuid = UIDevice.current.identifierForVendor?.uuidString
-        shopCartViewModel.refreshClassfiyDataSource(deviceNumber: uuid ?? "", memberId:UserDefaults.LoginInfo.string(forKey: .id) ?? "")
+        shopCartViewModel.refreshGoodsCart()
     }
     //    为你推荐
     func requestrecommendGoodsDate(){
@@ -318,36 +306,37 @@ class YDShopCartViewController: YDBasicViewController {
     
     private func deleteGoodsFromShopCart() {
         let deleteId = deleteIdArray.joined(separator: ",")
-                YDShopCartViewProvider.request(.getGoodsDeleteCartListInfo(id:deleteId)) { result  in
-                    if case let .success(response) = result {
-                        let data = try? response.mapJSON()
-                        if data != nil{
-                        let json = JSON(data!)
-                        print("-------%@",json)
-                        if json["success"] == true{
-                        self.FooterH = 70
-                        self.deleteIdArray.removeAll()
-        //                    self.backView.isHidden = true
-        //                        self.rightBarButton.isSelected = false
-                            NotificationCenter.default.post(name: NSNotification.Name.init("refreshGoodsLisetCart"), object:nil)
-                             NotificationCenter.default.post(name: NSNotification.Name.init("refreshDeleteGoodsCountCart"), object:nil)
-                            self.requestSearchGoodsDate()
-                        }
-                        }
-                    }
-                }
+        deleteGoodsFromShopCart(deleteId: deleteId) {
+            self.deleteIdArray.removeAll()
+        }
     }
     
-    // 刷新购物车
-    @objc private func refreshShopCart() {
-        self.collectionView.mj_header.endRefreshing()
-        if self.shopCartViewModel.shopCartListModel != nil {
-            self.selectArray = self.shopCartViewModel.shopCartListModel!
+    private func deleteGoodsFromShopCart(deleteId: String, success: @escaping() -> ()) {
+        YDShopCartViewProvider.request(.getGoodsDeleteCartListInfo(id:deleteId)) { result  in
+            if case let .success(response) = result {
+                let data = try? response.mapJSON()
+                if data != nil{
+                    let json = JSON(data!)
+                    print("-------%@",json)
+                    if json["success"] == true{
+                        success()
+                        self.FooterH = 70
+                        //                    self.backView.isHidden = true
+                        //                        self.rightBarButton.isSelected = false
+                        NotificationCenter.default.post(name: NSNotification.Name.init("refreshGoodsLisetCart"), object:nil)
+                        NotificationCenter.default.post(name: NSNotification.Name.init("refreshDeleteGoodsCountCart"), object:nil)
+                        self.requestSearchGoodsDate()
+                    } else {
+                        self.toast(errorJson: json)
+                    }
+                } else {
+                    self.toast(error: "您的网络情况不好，请重新操作")
+                }
+            }
         }
-        NotificationCenter.default.post(name: NSNotification.Name.init("refreshGoodsLisetCart"), object:nil)
-        // 更新列表数据
-        self.collectionView.reloadData()
     }
+    
+   
 //  编辑
     @objc func rightBarButtonClick(){
         if deleteIdArray.count == 0 {
@@ -505,6 +494,99 @@ class YDShopCartViewController: YDBasicViewController {
     }
 }
 
+// Notification
+extension YDShopCartViewController {
+    
+    private func addNotification() {
+        //        单选删除数量
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshGoodsCountLisetCart(nofit:)), name: NSNotification.Name(rawValue:"refreshGoodsCountLisetCart"), object: nil)
+        
+        //        删除未全选
+        //         NotificationCenter.default.addObserver(self, selector: #selector(refreshGoodsCountLisetAllSelect(nofit:)), name: NSNotification.Name(rawValue:"refreshGoodsCountLisetAllSelect"), object: nil)
+        //        删除全选
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshGoodsISAllSelect(nofit:)), name: NSNotification.Name(rawValue:"refreshGoodsISAllSelect"), object: nil)
+        //        单选商品ID
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshGoodsIdArrayCart(nofit:)), name: NSNotification.Name(rawValue:"refreshGoodsIdArrayCart"), object: nil)
+        //          猜你喜欢，添加购物车刷新数据
+        NotificationCenter.default.addObserver(self, selector: #selector(requestCartGoodsShowHintData(nofit:)), name: NSNotification.Name(rawValue:"requestCartGoodsShowHintData"), object: nil)
+        //      添加商品购物车刷新
+        NotificationCenter.default.addObserver(self, selector: #selector(requestCartGoodsData(nofit:)), name: NSNotification.Name(rawValue:"requestCartGoodsData"), object: nil)
+        
+        //      选择地址刷新
+        NotificationCenter.default.addObserver(self, selector: #selector(notificationUpudeatAddersValue(nofit:)), name: NSNotification.Name(rawValue:updeatAdders), object: nil)
+        
+        //      订单支付完成查看订单返回
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshDetailsOrderGoodsCart(nofit:)), name: NSNotification.Name(rawValue:"refreshDetailsOrderGoodsCart"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name.init(""), object:nil)
+        
+        // 刷新购物车
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshShopCart(noti:)), name: NSNotification.Name.init(kShopCartDataRefresh), object: nil)
+        
+        // 往购物车添加商品
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(addToCart(noti:)),
+            name: NSNotification.Name.init(kShopCartAddGoods),
+            object: nil
+        )
+    }
+    
+    // 刷新购物车
+    @objc private func refreshShopCart(noti: NSNotification) {
+        self.collectionView.mj_header.endRefreshing()
+        if self.shopCartViewModel.shopCartListModel != nil {
+            self.selectArray = self.shopCartViewModel.shopCartListModel!
+        }
+        let object = noti.object
+        if isAllSelect(object: object) {
+            selectAllGoods()
+        } else {
+            
+        }
+        //        NotificationCenter.default.post(name: NSNotification.Name.init("refreshGoodsLisetCart"), object:nil)
+        // 更新列表数据
+        self.collectionView.reloadData()
+    }
+    
+    @objc private func addToCart(noti: NSNotification) {
+        
+    }
+    
+    
+    private func isAllSelect(object: Any?) -> Bool {
+        if object == nil {
+            return false
+        }
+        
+        if !(object is Bool) {
+            return false
+        }
+        
+        return (object as! Bool)
+    }
+    
+    private func selectAllGoods() {
+        deleteIdArray.removeAll()
+        for (goodsIndex, _) in selectArray.enumerated() {
+            var goodsModel = self.selectArray[goodsIndex]
+            if goodsModel.list == nil {
+                continue
+            }
+            
+            for (listIndex, _) in goodsModel.list!.enumerated() {
+                var goodsList = goodsModel.list![listIndex]
+                goodsList.selected = true
+                goodsModel.list![listIndex] = goodsList
+                deleteIdArray.append(goodsList.id ?? "")
+            }
+            
+            selectArray[goodsIndex] = goodsModel
+        }
+        
+        self.collectionView.reloadData()
+    }
+}
+
 extension YDShopCartViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
    
@@ -656,6 +738,24 @@ extension YDShopCartViewController:YDShopCartViewCellDelegate{
         goodsVC.goodsId = goodsModel?.id ?? ""
         goodsVC.goodsCode = goodsModel?.goodsCode ?? ""
         self.navigationController?.pushViewController(goodsVC, animated: true)
+    }
+    
+    // 删除单个商品
+    func deleteGoodsInfo(selectSection: Int, selectRow: Int) {
+        if selectArray.count <= selectSection {
+            return
+        }
+        
+        let goodsModel = self.selectArray[selectSection].list?[selectRow]
+        if goodsModel == nil {
+            return
+        }
+        
+        deleteGoodsFromShopCart(deleteId: goodsModel?.id ?? "") {
+            if self.deleteIdArray.contains(goodsModel?.id ?? "") {
+                self.deleteIdArray.removeAll(where: { $0 == goodsModel!.id})
+            }
+        }
     }
     
 //    去结算

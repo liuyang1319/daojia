@@ -22,8 +22,8 @@ struct YDShopCartGoodsListModel: HandyJSON {
     var allSelectBtn :Bool = false
     //商品购买的数量, 默认0
     var count: Int = 0
-    //是否选中，默认没有选中的
-    var selected: Bool?
+    //是否选中，默认选中的
+    var selected: Bool = false
 //    总价
     var priceSum:Double?
     var goodsId:String?

@@ -47,7 +47,7 @@ class YDUpdateNameViewController: YDBasicViewController ,UITextFieldDelegate{
         label.numberOfLines = 2
         label.textColor = YMColor(r: 153, g: 153, b: 153, a: 1)
         label.textAlignment = NSTextAlignment.left
-        label.text = "用户昵称规范：可以使用中文、大写英文、数字、下划线及其组合"
+        label.text = "用户昵称规范：最多只能输入6个字符，仅限中文，数字，字母"
         return label
     }()
     
@@ -83,23 +83,28 @@ class YDUpdateNameViewController: YDBasicViewController ,UITextFieldDelegate{
         if isLetterWithDigital(string) == true{
             let text = textField.text ?? ""
             let len = text.count + string.count - range.length
-            return len<=50
+            return len<=6
         }else{
             return false
         }
       
     }
     @objc func finishSaveButtonClick() {
-  
+        
+        nameField.endEditing(true)
+        
         if self.nameField.text!.count <= 0{
             //只显示文字
-            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            hud.mode = MBProgressHUDMode.text
-            hud.label.text = "请输入昵称"
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(animated: true, afterDelay: 1)
+            self.toast(title: "请输入昵称")
             return
         }
+        
+        if !self.nameField.text!.isUserName {
+            self.toast(title: "请输入符合规则的昵称")
+            return
+        }
+        
+        
         let nameDate:Data = self.nameField.text?.data(using:String.Encoding.nonLossyASCII, allowLossyConversion: true) as! Data
         let nameStr:String = String.init(data:nameDate, encoding:String.Encoding.utf8) ?? ""
         YDUserCenterProvider.request(.setUpdateUserCenterNameInfo(token: UserDefaults.LoginInfo.string(forKey: .token)! as NSString, memberPhone: UserDefaults.LoginInfo.string(forKey: .phone)! as NSString, name: nameStr)){ result  in

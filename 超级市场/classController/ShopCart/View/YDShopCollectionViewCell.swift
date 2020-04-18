@@ -99,11 +99,7 @@ class YDShopCollectionViewCell: UITableViewCell {
         didSet{
             guard let model = shopCartGoodList else { return }
             self.selectBtn.frame = CGRect(x: 10, y: 50, width: 30, height: 30)
-            if model.selected != nil {
-                self.selectBtn.isSelected = model.selected!
-            }else{
-                self.selectBtn.isSelected = false
-            }
+            self.selectBtn.isSelected = model.selected
             self.iconImage.frame = CGRect(x: self.selectBtn.frame.maxX+10, y: 15, width: 90, height: 90)
             self.iconImage.kf.setImage(with: URL(string: model.imageUrl ?? ""))
             

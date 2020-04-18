@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		04624626244834D90068806E /* YDGoodsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04624625244834D90068806E /* YDGoodsTableViewCell.swift */; };
-		2F3553A3244586BD00B6B9C5 /* Pods_超级市场.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F3553A2244586BD00B6B9C5 /* Pods_超级市场.framework */; };
+		047A2C78244967E70054316D /* String+Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047A2C77244967E70054316D /* String+Match.swift */; };
+		047A2C7B24498A9B0054316D /* YDInfoTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047A2C7A24498A9B0054316D /* YDInfoTool.swift */; };
+		047A2C7D24499DC60054316D /* LocalDataConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047A2C7C24499DC60054316D /* LocalDataConstant.swift */; };
 		2F3553A724458BC300B6B9C5 /* YDCancelCauseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3553A624458BC300B6B9C5 /* YDCancelCauseModel.swift */; };
 		2F3553AA2445AF8300B6B9C5 /* YDApplyRefundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3553A82445AF8200B6B9C5 /* YDApplyRefundCell.swift */; };
 		2F3553AB2445AF8300B6B9C5 /* YDApplyRefundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F3553A92445AF8200B6B9C5 /* YDApplyRefundCell.xib */; };
@@ -417,11 +419,14 @@
 		57F44AE82318EF65008D0C4A /* YDHomeGoodsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F44AE72318EF65008D0C4A /* YDHomeGoodsInfo.swift */; };
 		57F6322B242A65F200AE0AEC /* YDHomeLikeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F6322A242A65F200AE0AEC /* YDHomeLikeTableViewCell.swift */; };
 		57FB580023C3313700A04984 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57FB57FF23C3313700A04984 /* UserNotifications.framework */; };
+		F178247B01D3925DBA173E88 /* Pods_____.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C36507D36E6DF75732A0D4A /* Pods_____.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		04624625244834D90068806E /* YDGoodsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YDGoodsTableViewCell.swift; sourceTree = "<group>"; };
-		2F3553A2244586BD00B6B9C5 /* Pods_超级市场.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_超级市场.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		047A2C77244967E70054316D /* String+Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Match.swift"; sourceTree = "<group>"; };
+		047A2C7A24498A9B0054316D /* YDInfoTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YDInfoTool.swift; sourceTree = "<group>"; };
+		047A2C7C24499DC60054316D /* LocalDataConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataConstant.swift; sourceTree = "<group>"; };
 		2F3553A624458BC300B6B9C5 /* YDCancelCauseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YDCancelCauseModel.swift; sourceTree = "<group>"; };
 		2F3553A82445AF8200B6B9C5 /* YDApplyRefundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YDApplyRefundCell.swift; sourceTree = "<group>"; };
 		2F3553A92445AF8200B6B9C5 /* YDApplyRefundCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YDApplyRefundCell.xib; sourceTree = "<group>"; };
@@ -836,7 +841,7 @@
 		57F6322A242A65F200AE0AEC /* YDHomeLikeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YDHomeLikeTableViewCell.swift; sourceTree = "<group>"; };
 		57FB57FE23C32DAB00A04984 /* 超级市场.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "超级市场.entitlements"; sourceTree = "<group>"; };
 		57FB57FF23C3313700A04984 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
-		9C36507D36E6DF75732A0D4A /* Pods_____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_____.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C36507D36E6DF75732A0D4A /* Pods_____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_____.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB8958EFEBC20EEE0A827FC2 /* Pods-超级市场.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-超级市场.debug.xcconfig"; path = "Target Support Files/Pods-超级市场/Pods-超级市场.debug.xcconfig"; sourceTree = "<group>"; };
 		EED0DF6513CF7D161A58F144 /* Pods-超级市场.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-超级市场.release.xcconfig"; path = "Target Support Files/Pods-超级市场/Pods-超级市场.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -850,7 +855,6 @@
 				57FB580023C3313700A04984 /* UserNotifications.framework in Frameworks */,
 				57889F7F23B5A8E70001B235 /* TZImagePickerController.framework in Frameworks */,
 				575542322369BA1B00400794 /* SystemConfiguration.framework in Frameworks */,
-				2F3553A3244586BD00B6B9C5 /* Pods_超级市场.framework in Frameworks */,
 				575542422369BAA500400794 /* CoreMotion.framework in Frameworks */,
 				575542402369BA9400400794 /* CFNetwork.framework in Frameworks */,
 				5755423E2369BA8800400794 /* Foundation.framework in Frameworks */,
@@ -879,12 +883,21 @@
 				578BC30022F561C700FFDEF3 /* LTScrollView.framework in Frameworks */,
 				5703446E23CDDBDF00140CE3 /* SystemConfiguration.framework in Frameworks */,
 				578BC2FE22F561C000FFDEF3 /* Alamofire.framework in Frameworks */,
+				F178247B01D3925DBA173E88 /* Pods_____.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		047A2C7924498A8B0054316D /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				047A2C7A24498A9B0054316D /* YDInfoTool.swift */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
 		2F3FECAB2447F80300E088A7 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
@@ -897,6 +910,7 @@
 			isa = PBXGroup;
 			children = (
 				2F7E03BD2446EC2700D37CB9 /* NotificationConstant.swift */,
+				047A2C7C24499DC60054316D /* LocalDataConstant.swift */,
 			);
 			name = Constant;
 			path = "New Group";
@@ -1686,6 +1700,7 @@
 		578BC2D022F53E6800FFDEF3 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				047A2C7924498A8B0054316D /* Tool */,
 				57EDD6C7236806DE00DA3D18 /* OSSSwiftDemo */,
 				57C552D123549DC300648085 /* 倒计时 */,
 				5745E3AE233B04280067F7D1 /* AddressPickerView */,
@@ -1862,6 +1877,7 @@
 				5713553D23583C9E001B9D0A /* rulerView.swift */,
 				57F0937023D8227B000379B8 /* YDEmojiString.swift */,
 				2F7AA25324457C71009DA6E6 /* YDTableView+RegiestCell.swift */,
+				047A2C77244967E70054316D /* String+Match.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -2031,7 +2047,6 @@
 		781AEBD4B134CC391AA8309D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2F3553A2244586BD00B6B9C5 /* Pods_超级市场.framework */,
 				5703446F23CDDC1600140CE3 /* libsqlite3.0.tbd */,
 				5703446923CC40DC00140CE3 /* Toast_Swift.framework */,
 				5703446523CC40C200140CE3 /* Toast_Swift.framework */,
@@ -2484,6 +2499,7 @@
 				574D3FDD23B49F75007A0B00 /* MessageStyleView.swift in Sources */,
 				5793E491239C01C3007527EF /* YDInvitationFriendViewController.swift in Sources */,
 				5749FFA9234EC5A9007FDCC3 /* YDMainIntegralTableViewCell.swift in Sources */,
+				047A2C7D24499DC60054316D /* LocalDataConstant.swift in Sources */,
 				578BC2D622F54F9500FFDEF3 /* YDClassifyViewController.swift in Sources */,
 				572726CF22FD22D300A776CF /* YDCollectGoodsViewController.swift in Sources */,
 				5703447423D07B7A00140CE3 /* YDClassGoodsViewModel.swift in Sources */,
@@ -2535,6 +2551,7 @@
 				573FE1E122F95E1000E31906 /* YDGoodsCategoryViewController.swift in Sources */,
 				5749FF9B234E0DB6007FDCC3 /* YDMainIntegralViewController.swift in Sources */,
 				57BBF6D0239C948200CE6551 /* YDInvitationCodeViewController.swift in Sources */,
+				047A2C78244967E70054316D /* String+Match.swift in Sources */,
 				2FA59DBE244804C900DEA9DE /* YDGoodsCollectionCell.swift in Sources */,
 				574D402623B49F75007A0B00 /* CLAnimatedTransitioning.swift in Sources */,
 				574235D02394C2DE0068AB65 /* YDWeChatCodeViewController.swift in Sources */,
@@ -2550,6 +2567,7 @@
 				574D3FE323B49F75007A0B00 /* NavgationVCExt.swift in Sources */,
 				573FE1D322F7D87700E31906 /* YDShopHeaderReusableView.swift in Sources */,
 				573FE1E322F9623300E31906 /* YDGoodsCategoryHeaderView.swift in Sources */,
+				047A2C7B24498A9B0054316D /* YDInfoTool.swift in Sources */,
 				573FE1EF22F99A0E00E31906 /* YDUserInfoTableViewCell.swift in Sources */,
 				57EDD6CD2368070F00DA3D18 /* Other.swift in Sources */,
 				574D3FEC23B49F75007A0B00 /* GaussianBlurBrush.swift in Sources */,

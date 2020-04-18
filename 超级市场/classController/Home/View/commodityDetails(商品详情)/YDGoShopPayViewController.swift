@@ -84,7 +84,7 @@ class YDGoShopPayViewController: YDBasicViewController {
         reuqestSelelctDataTimer()
 //        选择优惠劵重新计算金额
         NotificationCenter.default.addObserver(self, selector: #selector(selectGoodsOrderCoupon(nofit:)), name: NSNotification.Name(rawValue:"selectGoodsOrderCoupon"), object: nil)
-        NotificationCenter.default.post(name: NSNotification.Name.init("refreshDeleteGoodsCountCart"), object:nil)
+//        NotificationCenter.default.post(name: NSNotification.Name.init("refreshDeleteGoodsCountCart"), object:nil)
         self.view.backgroundColor = YMColor(r: 246, g: 246, b: 246, a: 1)
         self.title = "订单确认"
         self.view.addSubview(self.tableView)

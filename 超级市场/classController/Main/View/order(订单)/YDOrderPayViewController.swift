@@ -236,7 +236,7 @@ extension YDOrderPayViewController : YDOrderListTableViewCellDelegate{
                         }
                         
                     }else{
-                        self.toast(error: json["error"]["errorMessage"].description)
+                        self.toast(errorJson: json)
                     }
                 }
             }
@@ -264,7 +264,7 @@ extension YDOrderPayViewController : YDOrderListTableViewCellDelegate{
                         self.toast(title: "取消失败")
                     }
                 }else{
-                    self.toast(error: json["error"]["errorMessage"].description)
+                    self.toast(errorJson: json)
                 }
             }
         }

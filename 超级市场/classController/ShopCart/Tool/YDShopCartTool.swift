@@ -12,6 +12,25 @@ class YDShopCartTool: NSObject {
     private let viewModel = YDShopCartViewModel.share()
     private static let instance = YDShopCartTool()
     
+    var selectGoodsId: [String] {
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: kGoodsCartData)
+        }
+        
+        get {
+            return (UserDefaults.standard.value(forKey: kGoodsCartData) as? [String]) ?? []
+        }
+    }
+    
+    var isChangeGoodsCart: Bool {
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: kChangeGoodsCartData)
+        }
+        
+        get {
+            return (UserDefaults.standard.value(forKey: kChangeGoodsCartData) as? Bool) ?? false
+        }
+    }
     // 单例
     static func share() -> YDShopCartTool {
         return instance
@@ -42,4 +61,5 @@ class YDShopCartTool: NSObject {
         
         return 0
     }
+   
 }

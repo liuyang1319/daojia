@@ -50,6 +50,7 @@ class YDUserInfoTableViewCell: UITableViewCell {
         setUpLayout()
     }
     func setUpLayout(){
+
         self.addSubview(self.backView)
         self.backView.frame = CGRect(x: 0, y: 10, width: LBFMScreenWidth, height: 65)
         

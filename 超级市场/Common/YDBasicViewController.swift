@@ -8,6 +8,8 @@
 
 import UIKit
 import MBProgressHUD
+import SwiftyJSON
+import SVProgressHUD
 
 class YDBasicViewController: UIViewController,UIGestureRecognizerDelegate {
     
@@ -106,6 +108,14 @@ class YDBasicViewController: UIViewController,UIGestureRecognizerDelegate {
         hud.label.text = error
         hud.removeFromSuperViewOnHide = true
         hud.hide(animated: true, afterDelay: 1)
+    }
+    
+    func toast(errorJson: JSON) {
+        toast(error: errorJson["error"]["errorMessage"].description)
+    }
+    
+    func addToGoodsCart() {
+        
     }
 }
 

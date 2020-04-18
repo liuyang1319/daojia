@@ -79,7 +79,7 @@ class YDApplicationRefundViewController: YDBasicViewController {
                         }
                         
                     }else{
-                        self.toast(error: json["error"]["errorMessage"].description)
+                        self.toast(errorJson: json)
                     }
                 }
         }
@@ -173,7 +173,7 @@ extension YDApplicationRefundViewController : YDApplicationRefundFooterViewViewD
                     }
                     self.present(alertController, animated: true, completion: nil)
                 }else{
-                    self.toast(error: json["error"]["errorMessage"].description)
+                    self.toast(errorJson: json)
                 }
             }
         }

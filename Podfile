@@ -1,6 +1,8 @@
-platform :ios, '9.0'
-
+workspace '超级市场'
+source 'https://github.com/CocoaPods/Specs.git'
 target '超级市场' do
+  platform :ios, '9.0'
+  
   use_frameworks!
   # 忽略引入库的所有警告
   inhibit_all_warnings!
@@ -48,6 +50,7 @@ target '超级市场' do
   #约束
   pod 'Masonry'
   
+  project '超级市场.xcodeproj'
 #  #event通知
 #  pod 'SwiftEventBus'
 end

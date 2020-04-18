@@ -574,6 +574,7 @@ extension YDUserInfoViewController : UITableViewDelegate, UITableViewDataSource 
             var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
             if cell == nil{
                 cell = UITableViewCell.init(style: UITableViewCell.CellStyle.value1, reuseIdentifier: "cell")
+                cell?.selectionStyle = .none
             }
             cell?.textLabel?.font = UIFont.systemFont(ofSize: 14)
             cell?.accessoryType = .disclosureIndicator

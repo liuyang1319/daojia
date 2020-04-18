@@ -85,6 +85,7 @@ SPEC REPOS:
     - JXMarqueeView
     - Kingfisher
     - LTScrollView
+    - Masonry
     - MBProgressHUD
     - MJRefresh
     - Moya
@@ -94,13 +95,11 @@ SPEC REPOS:
     - SVProgressHUD
     - SwiftMessages
     - SwiftyJSON
+    - Toast-Swift
     - TZImagePickerController
     - UMCCommon
     - UMCPush
     - WechatOpenSDK
-  trunk:
-    - Masonry
-    - Toast-Swift
 
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
@@ -134,6 +133,6 @@ SPEC CHECKSUMS:
   UMCPush: 1edd856027dcf905333effb4040ace5d236a7316
   WechatOpenSDK: 9b721089507c895d05f997408c30bb6e6f5f9b60
 
-PODFILE CHECKSUM: f97f643be6129af84d37dcd9da1695e8440b6cf2
+PODFILE CHECKSUM: dde6e672ecb042c646010c38190a2ea3941e5461
 
 COCOAPODS: 1.9.1
